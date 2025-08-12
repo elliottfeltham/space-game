@@ -1,6 +1,6 @@
 import sys
 import pygame
-from scripts.entities import Player
+from scripts.entities import Player, Bullet
 
 SCREEN_SIZE = (800, 400)
 SCREEN_CENTER = (SCREEN_SIZE[0] // 2, SCREEN_SIZE[1] // 2)
@@ -14,7 +14,12 @@ class Game:
 
         self.clock = pygame.time.Clock()
 
+        self.all_sprites = pygame.sprite.Group()
+
         self.player = Player((32,32), SCREEN_CENTER)
+        self.all_sprites.add(self.player)
+
+        self.bullets = pygame.sprite.Group()
 
 
     def run(self):
@@ -24,12 +29,21 @@ class Game:
                     pygame.quit()
                     sys.exit()
 
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        bullet = self.player.fire()
+                        self.all_sprites.add(bullet)
+                        self.bullets.add(bullet)
+
+
 
             self.screen.fill((0,0,0))
 
-            self.player.update()
-            self.player.render(self.screen)
-            
+            self.all_sprites.update()
+            self.all_sprites.draw(self.screen)
+
+            print(self.bullets)
+
             pygame.display.update()
             self.clock.tick(60)
 Game().run()
