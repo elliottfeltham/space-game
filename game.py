@@ -18,7 +18,7 @@ class Game:
 
         self.player = Player((32,32), SCREEN_CENTER)
         self.all_sprites.add(self.player)
-
+ 
         self.bullets = pygame.sprite.Group()
 
 
@@ -46,4 +46,4 @@ class Game:
 
             pygame.display.update()
             self.clock.tick(60)
-Game().run()
+Game().run() 

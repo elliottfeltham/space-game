@@ -15,6 +15,7 @@ class Player(pygame.sprite.Sprite):
         self.image = self.original_image.copy()
         self.rect = self.original_image.get_rect(center=pos)
 
+
     def rotate(self):
         # work out rotation angle based of mouse position
         mouse_pos = pygame.mouse.get_pos()
@@ -33,7 +34,7 @@ class Player(pygame.sprite.Sprite):
         direction = direction.normalize()
         muzzle_distance = self.size[1] // 2
         spawn_pos = pygame.math.Vector2(self.rect.center) + (direction * muzzle_distance)
-        return Bullet(spawn_pos, direction, 5)
+        return Bullet(spawn_pos, direction, 10)
 
     def update(self):
         self.rotate()
@@ -52,8 +53,16 @@ class Bullet(pygame.sprite.Sprite):
 
         self.velocity = direction * self.speed
 
+        self.spawn_time = pygame.time.get_ticks()
+
     def update(self):
         self.pos += self.velocity
         self.rect.center = self.pos
+
+        current_time = pygame.time.get_ticks()
+        if current_time - self.spawn_time > 3000:
+            self.kill()
+            
+            
 
         
