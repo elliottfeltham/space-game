@@ -46,22 +46,38 @@ class Bullet(pygame.sprite.Sprite):
 
         self.speed = speed
         self.pos = pos
+        self.size = 5
 
-        self.image = pygame.Surface((5,5))
-        pygame.draw.circle(self.image, (255,255,255),(2.5,2.5), 2.5)
+        self.image = pygame.Surface((self.size,self.size))
+        pygame.draw.circle(self.image, (255,255,255),(self.size / 2, self.size /2), self.size / 2, 5)
         self.rect = self.image.get_rect(center=pos)
 
         self.velocity = direction * self.speed
 
         self.spawn_time = pygame.time.get_ticks()
 
+        self.exploding = False
+
+    def explode(self):
+        self.rect = self.image.get_rect(center=self.rect.center)
+        self.velocity = pygame.math.Vector2(0, 0)
+        self.exploding = True
+
+
     def update(self):
         self.pos += self.velocity
         self.rect.center = self.pos
 
         current_time = pygame.time.get_ticks()
-        if current_time - self.spawn_time > 3000:
+        if current_time - self.spawn_time > 1500:
             self.kill()
+
+        if self.exploding:
+            self.size += 1
+            self.image = pygame.Surface((self.size,self.size))
+            pygame.draw.circle(self.image, (255,255,255),(self.size / 2, self.size /2), self.size / 2, 2)
+            self.rect = self.image.get_rect(center=self.rect.center)
+
 
 class Asteroid(pygame.sprite.Sprite):
     def __init__(self, pos, player_pos, speed):
