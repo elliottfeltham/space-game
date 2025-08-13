@@ -1,9 +1,7 @@
 import sys
 import pygame
 from scripts.entities import Player, Bullet
-
-SCREEN_SIZE = (800, 400)
-SCREEN_CENTER = (SCREEN_SIZE[0] // 2, SCREEN_SIZE[1] // 2)
+from scripts.utils import SCREEN_SIZE, SCREEN_CENTER, get_offscreen_location
 
 class Game:
     def __init__(self):
@@ -42,7 +40,7 @@ class Game:
             self.all_sprites.update()
             self.all_sprites.draw(self.screen)
 
-            print(self.bullets)
+            
 
             pygame.display.update()
             self.clock.tick(60)

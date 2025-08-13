@@ -62,6 +62,14 @@ class Bullet(pygame.sprite.Sprite):
         current_time = pygame.time.get_ticks()
         if current_time - self.spawn_time > 3000:
             self.kill()
+
+class Asteroid(pygame.sprite.Sprite):
+    def __init__(self, pos, ):
+        super().__init__()
+
+        self.pos = pos
+
+
             
             
 
