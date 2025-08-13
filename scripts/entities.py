@@ -64,10 +64,24 @@ class Bullet(pygame.sprite.Sprite):
             self.kill()
 
 class Asteroid(pygame.sprite.Sprite):
-    def __init__(self, pos, ):
+    def __init__(self, pos, player_pos, speed):
         super().__init__()
 
-        self.pos = pos
+        self.pos = pygame.math.Vector2(pos)
+        self.speed = speed
+
+        self.image = pygame.Surface((32,32)).convert_alpha()
+        self.rect = self.image.get_rect(center=self.pos)
+        pygame.draw.circle(self.image, (255,255,255), (16,16), 16, 3)
+
+        direction = pygame.math.Vector2(player_pos) - pygame.math.Vector2(self.rect.center)
+        direction = direction.normalize()
+
+        self.velocity = direction * self.speed
+
+    def update(self):
+        self.pos += self.velocity
+        self.rect.center = self.pos
 
 
             

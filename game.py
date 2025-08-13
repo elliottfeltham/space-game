@@ -1,6 +1,6 @@
 import sys
 import pygame
-from scripts.entities import Player, Bullet
+from scripts.entities import Player, Bullet, Asteroid
 from scripts.utils import SCREEN_SIZE, SCREEN_CENTER, get_offscreen_location
 
 class Game:
@@ -18,6 +18,7 @@ class Game:
         self.all_sprites.add(self.player)
  
         self.bullets = pygame.sprite.Group()
+        self.asteroids = pygame.sprite.Group()
 
 
     def run(self):
@@ -33,6 +34,10 @@ class Game:
                         self.all_sprites.add(bullet)
                         self.bullets.add(bullet)
 
+                    if event.key == pygame.K_UP:
+                        asteroid = Asteroid(get_offscreen_location(), self.player.rect.center, 2)
+                        self.all_sprites.add(asteroid)
+                        self.asteroids.add(asteroid)
 
 
             self.screen.fill((0,0,0))
@@ -40,7 +45,7 @@ class Game:
             self.all_sprites.update()
             self.all_sprites.draw(self.screen)
 
-            
+
 
             pygame.display.update()
             self.clock.tick(60)

@@ -13,6 +13,6 @@ def get_offscreen_location():
     y_bottom = random.randrange(SCREEN_SIZE[1] + 200, SCREEN_SIZE[1] + 400)
 
     coordinates = random.choice([(x_right, y_left_right), (x_left, y_left_right), (x_top_bottom, y_top), (x_top_bottom, y_bottom)])
-    print(coordinates)
+    return coordinates
 
 get_offscreen_location()
